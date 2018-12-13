@@ -1,0 +1,188 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "import csv\n",
+    "unique_votes = 0\n",
+    "candidate_votes = {}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with open('election_data.csv', 'r') as f:\n",
+    "    reader = csv.reader(f,)\n",
+    "    next(reader)\n",
+    "    for row in reader:\n",
+    "        unique_votes += 1\n",
+    "        if row[2] not in candidate_votes:\n",
+    "            candidate_votes[row[2]] = 1\n",
+    "        elif row[2] in candidate_votes:\n",
+    "            candidate_votes[row[2]] += 1\n",
+    "     "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "3521001\n",
+      "{'Khan': 2218231, 'Correy': 704200, 'Li': 492940, \"O'Tooley\": 105630}\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(unique_votes)\n",
+    "print(candidate_votes)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'Khan': 2218231, 'Correy': 704200, 'Li': 492940, \"O'Tooley\": 105630}"
+      ]
+     },
+     "execution_count": 51,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "candidate_votes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "percent_votes = {candidate: vote / unique_votes for candidate, vote in candidate_votes.items()}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'Khan': 0.6300001050837531,\n",
+       " 'Correy': 0.19999994319797126,\n",
+       " 'Li': 0.13999996023857988,\n",
+       " \"O'Tooley\": 0.02999999147969569}"
+      ]
+     },
+     "execution_count": 55,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "percent_votes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 58,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Khan and 63.0%\n",
+      "Correy and 20.0%\n",
+      "Li and 14.0%\n",
+      "O'Tooley and 3.0%\n"
+     ]
+    }
+   ],
+   "source": [
+    "for candidate, percent in percent_votes.items():\n",
+    "    print(f\"{candidate} and {round(percent * 100, 2)}%\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 61,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "winner = \"\"\n",
+    "winning = 0\n",
+    "for candidate, percent in percent_votes.items():\n",
+    "    if percent > winning:\n",
+    "        winning = percent\n",
+    "        winner = candidate"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 62,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'Khan'"
+      ]
+     },
+     "execution_count": 62,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "winner"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
