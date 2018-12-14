@@ -1,0 +1,17 @@
+import os
+import csv
+first_name = ""
+last_name = ""
+form_name = []
+form_birth = ""
+
+with open('employee_data.csv', 'r') as f:
+    reader = csv.reader(f,)
+    next(reader)
+    for row in reader:
+        first_name = row[1].split(" ")[0]
+        last_name = row[1].split(" ")[1]
+        form_name = [last_name, first_name]
+        birth_split = row[2].split("-")
+        break
+print(form_birth)
